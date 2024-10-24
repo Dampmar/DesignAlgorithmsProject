@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <limits.h>
+#define SIZE 50000
 
-const int size = 200000;
-int arr[size];
+int arr[SIZE];
+const int size = SIZE;
 
 typedef void (*SortFunction)(int[], int);
 
