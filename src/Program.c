@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <limits.h>
-#define SIZE 50000
+#define SIZE 200000
 
 int arr[SIZE];
 const int size = SIZE;
