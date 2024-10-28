@@ -3,9 +3,11 @@
   "configurations": [
     {
       "name": "C/C++ Runner: Debug Session",
-      "type": "lldb",
+      "type": "cppvsdbg",
       "request": "launch",
       "args": [],
+      "stopAtEntry": false,
+      "console": "externalTerminal",
       "cwd": ".",
       "program": "build/Debug/outDebug"
     }
