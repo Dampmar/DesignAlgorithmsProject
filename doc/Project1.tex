@@ -7,9 +7,11 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{float}
+\usepackage{hyperref}
 \usepackage{listings}
 \usepackage{pgfplots}
 \usepackage{booktabs}
+\usepackage{tikz} % Required for TikZ drawings
 \pgfplotsset{compat=1.18}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -32,6 +34,8 @@
 \newfloat{algorithm}{tbp}{loa}
 \providecommand{\algorithmname}{Algorithm}
 \floatname{algorithm}{\protect\algorithmname}
+\usetikzlibrary{calc}
+
 
 
 \title{Benchmarking Sorting Algorithms: Selection, Merge and Heap Sort in C}
@@ -217,31 +221,160 @@ In this section we present the results of the experiments conducted to analyze t
         \cmidrule{3-5}
         Algorithm & Size (k) & 1 & 2 & 3 & Mean\tabularnewline
         \midrule
-        Selection & 50000 & 2.4970 & 2.4900 & 2.4650 & 0.0087\tabularnewline
+        Selection & 50000 & 2.4970 & 2.4900 & 2.4650 & 2.4840 \tabularnewline
         \tabularnewline
-        & 100000 & 9.8030 & 9.7680 & 9.7950 & 0.0182\tabularnewline
+        & 100000 & 9.8030 & 9.7680 & 9.7950 & 9.7887\tabularnewline
         \tabularnewline
-        & 150000 & 22.005 & 21.974 & 21.995 & 0.0283\tabularnewline
+        & 150000 & 22.005 & 21.974 & 21.995 & 21.9913\tabularnewline
         \tabularnewline
-        & 200000 & 39.083 & 39.114 & 39.059 & 0.0391\tabularnewline
+        & 200000 & 39.083 & 39.114 & 39.059 & 39.0853\tabularnewline
         \midrule
-        Merge & 50000 & 0.0012 & 0.0012 & 0.0011 & 0.0048\tabularnewline
+        Merge & 50000 & 0.0012 & 0.0012 & 0.0011 & 0.0012\tabularnewline
         \tabularnewline
-        & 100000 & 0.0160 & 0.0210 & 0.0220 & 0.0103\tabularnewline
+        & 100000 & 0.0160 & 0.0210 & 0.0220 & 0.0197\tabularnewline
         \tabularnewline
-        & 150000 & 0.0340 & 0.0360 & 0.0330 & 0.0157\tabularnewline
+        & 150000 & 0.0340 & 0.0360 & 0.0330 & 0.0343\tabularnewline
         \tabularnewline
-        & 200000 & 0.0410 & 0.0480 & 0.0470 & 0.0210\tabularnewline
+        & 200000 & 0.0410 & 0.0480 & 0.0470 & 0.0453\tabularnewline
         \midrule
-        Heap & 50000 & 0.0011 & 0.0005 & 0.0017 & 0.0031\tabularnewline
+        Heap & 50000 & 0.0011 & 0.0015 & 0.0017 & 0.0014\tabularnewline
         \tabularnewline
-        & 100000 & 0.0230 & 0.0120 & 0.0220 & 0.0061\tabularnewline
+        & 100000 & 0.0230 & 0.0120 & 0.0220 & 0.0190\tabularnewline
         \tabularnewline
-        & 150000 & 0.0350 & 0.0330 & 0.0470 & 0.0091\tabularnewline
+        & 150000 & 0.0350 & 0.0330 & 0.0470 & 0.0383\tabularnewline
         \tabularnewline
-        & 200000 & 0.0470 & 0.0490 & 0.0540 & 0.0121\tabularnewline
+        & 200000 & 0.0470 & 0.0490 & 0.0540 & 0.0500\tabularnewline
         \bottomrule
     \end{tabular}
 \end{table}
+\indent The mean execution times are plotted in figure~\ref{fig:lin1}, \ref{fig:lin2}, and \ref{fig:lin3}. This figure represents the graph of the data plotted in Table~\ref{tab:tiempos}. For comparison, purposes the curves are shown together in the same graph in Figure~\ref{fig:log}. Similarly, this figure represents the trends of each sorting algorithm and the average - execution time of each array size, all on the same graph of the data in Table~\ref{tab:tiempos}.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[name=plot1,
+            width=0.9\columnwidth,
+            xtick={0,50,100,150,200},
+            ylabel=Time (s),
+            xlabel=Array Size (k$\times10^{3}$),
+            title=\textbf{Selection Sort}]
+            \addplot coordinates {(50,2.484) (100,9.7887) (150,21.9913) (200,39.693)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Average execution time of Selection Sort algorithms \label{fig:lin1}}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[name=plot1,
+            width=0.9\columnwidth,
+            xtick={0,50,100,150,200},
+            ylabel=Time (s),
+            xlabel=Array Size (k$\times10^{3}$),
+            title=\textbf{Merge Sort}]
+            \addplot coordinates {(50,0.0012) (100,0.0197) (150,0.0343) (200,0.0453)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Average execution time of Merge Sort algorithms \label{fig:lin2}}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[name=plot1,
+            width=0.9\columnwidth,
+            xtick={0,50,100,150,200},
+            ylabel=Time (s),
+            xlabel=Array Size (k$\times10^{3}$),
+            title=\textbf{Heap Sort}]
+            \addplot coordinates {(50,0.0014) (100,0.0190) (150,0.0383) (200,0.0500)};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Average execution time of Heap Sort algorithms \label{fig:lin3}}
+\end{figure}
 
+\begin{figure}[H]
+    \begin{centering}
+    \begin{tikzpicture}
+        \begin{semilogyaxis}[
+            width=\columnwidth,
+            xtick={0,50,...,200},
+            xlabel=Array Size (k$\times10^{3}$),
+            ylabel=Time (s),
+            legend pos=north west,
+            title=\textbf{Comparison}]
+        \addplot coordinates{(50,2.484) (100,9.7887) (150,21.9913) (200,39.693)};
+        \addplot coordinates{(50,0.0012) (100,0.0197) (150,0.0343) (200,0.0453)};
+        \addplot coordinates{(50,0.0014) (100,0.0190) (150,0.0383) (200,0.0500)};
+        \addplot coordinates{(50,0.8289) (100,3.2758) (150,7.3546) (200,13.9294)};
+        \legend{Selection Sort,Merge Sort,Heap Sort, Average Execution Time}
+        \end{semilogyaxis}
+    \end{tikzpicture}
+    \par\end{centering}
+    
+    \caption{Comparing mean execution times of sorting algorithms.\label{fig:log}}
+\end{figure}
+\subsection{Analysis of Sorting Algorithms: Selection Sort}
+Selection Sort is a simple algorithm, it looks to divide an input array into two parts: a sorted subarray and an unsorted subarray. The algorithm repeatedly selects the smallest (ascending) element from the unsorted subarray and moves it to the end of the sorted subarray. This process continues until the entire array is sorted. 
+
+The time complexity of the Selection Sort is $\Theta(n^2)$, where $n$ is the size of the array. This is because it has $n-1$ comparison in the first iteration, $n-2$ comparisons in the second, and so on, resulting in a total of $\frac{n(n-1)}{2}$ in total. Additionaly, it may need to perform swap operations. 
+
+Due to its simplicity, Selection Sort is not suitable for large datasets due to its quadratic time complexity. However, it might find use when studying algorithms or for sorting small datasets.
+
+In this experiment, we implemented Selection Sort in C and tested its performance by measuring the execution times on arrays ranging from 50,000 and 200,000 elements. The execution times were measured, and the results were analyzed to assess the algorithm's real efficiency. The mean execution times of Selection Sort for different array sizes are as follows:
+\begin{itemize}
+    \item Array size 50,000 elements, has a 2.474 seconds mean execution time.
+    \item Array size 100,000 elements, has a 9.7887 seconds mean execution time.
+    \item Array size 150,000 elements, has a 21.9913 seconds mean execution time.
+    \item Array size 200,000 elements, has a 39.693 seconds mean execution time.
+\end{itemize}
+
+These results confirm that the execution time of Selection Sort grows quadratically as array size increases, which is consistnet with its $\Theta(n^2)$ time complexity. 
+\subsection{Analysis of Sorting Algorithms: Merge Sort}
+Merge Sort as stated above is a divide-and-conquer algorithm that divides the input array into two halves, recursively sorts the two halves, and merges them to produce a single sorted array. 
+
+The time complexity of Merge Sort is $\Theta(nlogn)$, where $n$ is the size of the array. This makes it more efficient than Selection Sort. 
+
+In this experiment, we implemented Merge Sort in C and tested its performance by measuring the execution times on arrays ranging from 50,000 and 200,000 elements. The execution times were measured, and the results were analyzed to assess the algorithm's real efficiency. The mean execution times of Merge Sort for different array sizes are as follows:
+\begin{itemize}
+    \item Array size 50,000 elements, has a 0.0012 seconds mean execution time.
+    \item Array size 100,000 elements, has a 0.0197 seconds mean execution time.
+    \item Array size 150,000 elements, has a 0.0343 seconds mean execution time.
+    \item Array size 200,000 elements, has a 0.0453 seconds mean execution time.
+\end{itemize}
+
+These results confirm that the execution time of Merge Sort grows logarithmically with size of the input array, consistent with its time complexity of $\Theta(nlogn)$. 
+
+\subsection{Analysis of Sorting Algorithms: Heap Sort}
+Heap Sort is a comparison-based sorting algorithm that uses a binary heap data structure to build a partially sorted heap. It then repeatedly extracts the maximum (for a max-heap) element and places it at the end of the sorted array.
+
+The time complexity of Heap Sort is $\Theta(nlogn)$, where $n$ is the size of the array. Yet, it isn't as efficient as Merge Sort in most cases due to the overhead of heapifying after every step. 
+
+In this experiment, we implemented Heap Sort in C and tested its performance by measuring the execution times on arrays ranging from 50,000 and 200,000 elements. The execution times were measured, and the results were analyzed to assess the algorithm's real efficiency. The mean execution times of Heap Sort for different array sizes are as follows:
+\begin{itemize}
+    \item Array size 50,000 elements, has a 0.0014 seconds mean execution time.
+    \item Array size 100,000 elements, has a 0.0190 seconds mean execution time.
+    \item Array size 150,000 elements, has a 0.0383 seconds mean execution time.
+    \item Array size 200,000 elements, has a 0.0500 seconds mean execution time.
+\end{itemize}
+
+These results confirm that the execution time of Heap Sort grows logarithmically with size of the input array, consistent with its time complexity of $\Theta(nlogn)$; and that it performs slightly worse than Merge Sort. 
+
+\subsection{Comparisons and Conclusion}
+\begin{itemize}
+    \item Merge Sort: With it't time complexity $\Theta(nlogn)$ and consistent performance across different input sizes, is the best performing sorting algorithm for large data sets.
+    \item Heap Sort: Although theoretically efficient, Heap Sort seems to fall short of the performance of the Merge Sort algorithm but compensates by having a space complexity of $\Theta(1)$ compared to the Merge Sort's space complexity of $\Theta(n)$.
+    \item Selection Sort: This algorithm, with its time complexity of $\Theta(n^2)$, are not suitable for efficiently sorting large data sets and are outperformed by Merge and Heap sort by a large margin. 
+\end{itemize}
+In conclusion, Merge Sort and Heap Sort are the recommended sorting algorithms for large data sets and overall efficiency. Both having time complexities of $\Theta(n^2)$, making them efficient for all types of input sizes, and they can also use any type of data that may be compared. 
+
+\begin{thebibliography}{1}
+
+\bibitem{website}
+Programiz, \emph{Heap sort}. Available: \url{https://www.programiz.com/dsa/heap-sort}. Accessed: 2024-10-29.
+
+\bibitem{website}
+Programiz, \emph{Merge Sort}. Available: \url{https://www.programiz.com/dsa/heap-sort}. Accessed: 2024-10-29.
+
+\bibitem{website}
+Programiz, \emph{Selection Sort}. Available: \url{https://www.programiz.com/dsa/heap-sort}. Accessed: 2024-10-29.
+\end{thebibliography}
 \end{document}
