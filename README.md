@@ -1,2 +1,2 @@
 # DesignAlgorithmsProject
-This repository contains the contents of the first project of Design of Algorithms.
+This repository contains the contents of the first project of Design of Algorithms. The purpose of this project is to comprehend the differences between time complexities of the algorithms: Selection Sort, Merge Sort and Heap Sort.
